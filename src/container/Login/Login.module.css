@@ -1,0 +1,27 @@
+.Login {
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(200, 51, 101),
+    rgb(0, 0, 0)
+  );
+  width: 80%;
+  height: 45rem;
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 2rem 3rem rgb(71, 71, 71);
+  text-align: center;
+}
+
+.Login__title {
+  font-size: 4rem;
+  color: rgb(27, 27, 27);
+  letter-spacing: 0.4rem;
+  margin-bottom: 10rem;
+}
+
+.Login__toggle {
+  font-size: 1.5rem;
+}
