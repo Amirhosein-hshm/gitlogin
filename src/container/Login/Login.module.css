@@ -17,11 +17,18 @@
 
 .Login__title {
   font-size: 4rem;
-  color: rgb(27, 27, 27);
+  color: rgb(200, 51, 101);
   letter-spacing: 0.4rem;
   margin-bottom: 10rem;
 }
 
-.Login__toggle {
-  font-size: 1.5rem;
+.Login__gitub {
+  font-size: 2rem;
+  text-decoration: none;
+  color: rgb(200, 51, 101);
+  transition: all 0.3s;
+}
+
+.Login__gitub:hover {
+  color: rgb(141, 48, 79);
 }

@@ -33,8 +33,8 @@ const Login = (props) => {
         <Input type="input" />
         <Input type="input" />
         <Button>join</Button>
-        <a href="#">
-          <p className={classes.Login__toggle}>sigin</p>
+        <a className={classes.Login__gitub} href="#">
+          <p>signin with github</p>
         </a>
       </form>
     </div>
