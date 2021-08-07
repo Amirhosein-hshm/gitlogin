@@ -26,9 +26,11 @@ export const startLogin = (proxy_url, hash) => {
     axios
       .post(proxy_url, hash)
       .then((dataResponse) => {
+        console.log(dataResponse);
         dispatch(LoginSuccess(dataResponse));
       })
       .catch((error) => {
+        console.log(error);
         dispatch(LoginFail());
       });
   };

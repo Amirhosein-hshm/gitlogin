@@ -36,17 +36,21 @@ const Login = (props) => {
     if (hashCode) {
       const newUrl = url.split("?code=");
       window.history.pushState({}, "", newUrl[0]);
-      props.startLogin();
+      props.startLoading();
       props.login(props.data.proxy_url, newUrl[1]);
     }
   }, [props.data, props.startLogin, props.login]);
 
-  if (props.data.isLoading) {
+  if (props.data.isLoggedIn) {
     return <Redirect to="/" />;
   }
   return (
     <div className={classes.Login}>
       <h1 className={classes.Login__title}>signup</h1>
+      {props.data.errorMessage ? (
+        <div className={classes.error_container}>{props.data.errorMessage}</div>
+      ) : null}
+
       <form className={classes.Login__form}>
         <Input type="input" placeholder="please inter your username" />
         <Input type="input" placeholder="please inter your password" />
@@ -55,9 +59,14 @@ const Login = (props) => {
         <a
           className={classes.Login__gitub}
           href={`https://github.com/login/oauth/authorize?scope=user&client_id=${props.data.client_id}&redirect_uri=${props.data.redirect_url}`}
-          onClick={() => {}}
+          onClick={() => {
+            props.loginBtn();
+          }}
         >
-          <p>signin with github</p>
+          <div className={classes.Login__link_text}>
+            <GithubIcon />
+            <p>signin with github</p>
+          </div>
         </a>
       </form>
     </div>
