@@ -17,7 +17,7 @@ const LoginSuccess = (data) => {
 const LoginFail = () => {
   return {
     type: actionType.LOGIN__FAIL,
-    payload: { erroeMessage: "sorry log in fail", isLoading: false },
+    payload: { errorMessage: "sorry log in fail", isLoading: false },
   };
 };
 

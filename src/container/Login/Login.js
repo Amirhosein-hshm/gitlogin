@@ -38,8 +38,7 @@ const Login = (props) => {
       const newUrl = url.split("?code=");
       window.history.pushState({}, "", newUrl[0]);
       props.startLogin();
-
-      // axios.post(props.data.proxy_url, newUrl[1]).then(response => )
+      props.login(props.data.proxy_url, newUrl[1]);
     }
   });
 
@@ -69,6 +68,7 @@ const Login = (props) => {
 const mapDispatchToprops = (dispatch) => {
   return {
     startLoading: () => dispatch(actions.startLoading()),
+    login: (proxy_url, hash) => dispatch(actions.startLogin(proxy_url, hash)),
   };
 };
 

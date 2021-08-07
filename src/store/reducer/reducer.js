@@ -1,3 +1,5 @@
+import * as actionsTypes from "../actions/actionsLogin";
+
 export const initialState = {
   isLoggedIn: JSON.parse(localStorage.getItem("isLoggedIn")) || false,
   user: JSON.parse(localStorage.getItem("user")) || null,
@@ -11,7 +13,7 @@ export const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case "LOGED_IN":
+    case actionsTypes.LOGED_IN:
       localStorage.setItem("isLoggedIn", action.payload.isLoggedIn);
       localStorage.setItem("user", action.payload.user);
       return {
@@ -19,7 +21,7 @@ const reducer = (state = initialState, action) => {
         isLoggedIn: action.payload.isLoggedIn,
         user: action.payload.user,
       };
-    case "LOGED_OUT": {
+    case actionsTypes.LOGED_OUT: {
       localStorage.clear();
       return {
         ...state,
@@ -28,11 +30,18 @@ const reducer = (state = initialState, action) => {
       };
     }
 
-    case "GITHUB__SEND__REQUEST":
+    case actionsTypes.GITHUB__SEND__REQUEST:
       return {
         ...state,
         isLoading: true,
         errorMessage: "",
+      };
+
+    case actionsTypes.LOGIN__FAIL:
+      return {
+        ...state,
+        isLoading: action.payload.isLoading,
+        errorMessage: action.payload.errorMessage,
       };
     default:
       return state;
