@@ -40,4 +40,39 @@
 }
 
 .error_container {
+  position: absolute;
+  background-color: brown;
+  width: 20rem;
+  height: 10rem;
+  top: 1rem;
+  right: 2rem;
+  animation: error 4s;
+  border-radius: 6rem;
+  opacity: 0;
+  font-size: 2rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes error {
+  0% {
+    transform: translateY(-10rem);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  80% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-10rem);
+  }
 }
