@@ -4,8 +4,10 @@ import { Redirect } from "react-router-dom";
 import classes from "./Login.module.css";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
+import { connect } from "react-redux";
 
 const Login = (props) => {
+  console.log(props);
   const [dataForm, setData] = useState({
     username: {
       elementType: "input",
@@ -41,4 +43,12 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+const mapDispatchToprops = (dispatch) => {
+  return {};
+};
+
+const mapStateToprops = (state) => {
+  return { data: state };
+};
+
+export default connect(mapStateToprops, null)(Login);
