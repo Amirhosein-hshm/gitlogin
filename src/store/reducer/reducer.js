@@ -4,7 +4,7 @@ export const initialState = {
   isLoggedIn: JSON.parse(localStorage.getItem("isLoggedIn")) || false,
   user: JSON.parse(localStorage.getItem("user")) || null,
   client_id: process.env.REACT_APP_CLIENT_ID,
-  redirect_uri: process.env.REACT_APP_REDIRECT_URI,
+  redirect_url: process.env.REACT_APP_REDIRECT_URI,
   client_secret: process.env.REACT_APP_CLIENT_SECRET,
   proxy_url: process.env.REACT_APP_PROXY_URL,
   isLoading: false,
@@ -38,6 +38,13 @@ const reducer = (state = initialState, action) => {
       };
 
     case actionsTypes.LOGIN__FAIL:
+      return {
+        ...state,
+        isLoading: action.payload.isLoading,
+        errorMessage: action.payload.errorMessage,
+      };
+
+    case actionsTypes.LOGIN__BTN:
       return {
         ...state,
         isLoading: action.payload.isLoading,

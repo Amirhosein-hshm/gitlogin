@@ -8,10 +8,18 @@ const Input = (props) => {
 
   switch (props.type) {
     case "input":
-      return <input className={inputClass.join(" ")} />;
+      return (
+        <input
+          className={inputClass.join(" ")}
+          placeholder={props.placeholder}
+        />
+      );
 
     default:
-      <input className={inputClass.join(" ")} />;
+      <input
+        className={inputClass.join(" ")}
+        placeholder={props.placeholder}
+      />;
   }
 };
 

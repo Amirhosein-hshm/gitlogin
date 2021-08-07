@@ -33,3 +33,10 @@ export const startLogin = (proxy_url, hash) => {
       });
   };
 };
+
+export const loginBtn = () => {
+  return {
+    type: actionType.LOGIN__BTN,
+    payload: { errorMessage: "", isLoading: false },
+  };
+};

@@ -29,7 +29,6 @@ const Login = (props) => {
     },
   });
 
-  console.log(props);
   useEffect(() => {
     const url = window.location.href;
     const hashCode = url.includes("?code=");
@@ -40,24 +39,24 @@ const Login = (props) => {
       props.startLogin();
       props.login(props.data.proxy_url, newUrl[1]);
     }
-  });
+  }, [props.data, props.startLogin, props.login]);
 
+  if (props.data.isLoading) {
+    return <Redirect to="/" />;
+  }
   return (
-    <div
-      // onMouseEnter={() => setData({ ...dataForm, showInput: false })}
-      // onMouseLeave={() => setData({ ...dataForm, showInput: true })}
-      className={classes.Login}
-    >
+    <div className={classes.Login}>
       <h1 className={classes.Login__title}>signup</h1>
       <form className={classes.Login__form}>
-        <Input
-          onChange={() => setData({ ...dataForm, showInput: false })}
-          type="input"
-        />
-        <Input type="input" />
+        <Input type="input" placeholder="please inter your username" />
+        <Input type="input" placeholder="please inter your password" />
 
         <Button>join</Button>
-        <a className={classes.Login__gitub} href="#">
+        <a
+          className={classes.Login__gitub}
+          href={`https://github.com/login/oauth/authorize?scope=user&client_id=${props.data.client_id}&redirect_uri=${props.data.redirect_url}`}
+          onClick={() => {}}
+        >
           <p>signin with github</p>
         </a>
       </form>
@@ -69,6 +68,7 @@ const mapDispatchToprops = (dispatch) => {
   return {
     startLoading: () => dispatch(actions.startLoading()),
     login: (proxy_url, hash) => dispatch(actions.startLogin(proxy_url, hash)),
+    loginBtn: () => dispatch(actions.loginBtn()),
   };
 };
 
