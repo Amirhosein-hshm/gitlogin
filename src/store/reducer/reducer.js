@@ -5,16 +5,15 @@ export const initialState = {
   redirect_uri: process.env.REACT_APP_REDIRECT_URI,
   client_secret: process.env.REACT_APP_CLIENT_SECRET,
   proxy_url: process.env.REACT_APP_PROXY_URL,
+  isLoading: false,
+  errorMessage: "",
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "LOGED_IN":
-      localStorage.setItem(
-        "isLoggedIn",
-        JSON.stringify(action.payload.isLoggedIn)
-      );
-      localStorage.setItem("user", JSON.stringify(action.payload.user));
+      localStorage.setItem("isLoggedIn", action.payload.isLoggedIn);
+      localStorage.setItem("user", action.payload.user);
       return {
         ...state,
         isLoggedIn: action.payload.isLoggedIn,
@@ -28,6 +27,13 @@ const reducer = (state = initialState, action) => {
         user: null,
       };
     }
+
+    case "GITHUB__SEND__REQUEST":
+      return {
+        ...state,
+        isLoading: true,
+        errorMessage: "",
+      };
     default:
       return state;
   }

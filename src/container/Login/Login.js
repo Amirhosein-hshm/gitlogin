@@ -5,9 +5,9 @@ import classes from "./Login.module.css";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import { connect } from "react-redux";
+import * as actions from "../../store/actions/actionsTypes";
 
 const Login = (props) => {
-  console.log(props);
   const [dataForm, setData] = useState({
     username: {
       elementType: "input",
@@ -28,7 +28,20 @@ const Login = (props) => {
       },
     },
   });
-  console.log(dataForm.showInput);
+
+  console.log(props);
+  useEffect(() => {
+    const url = window.location.href;
+    const hashCode = url.includes("?code=");
+
+    if (hashCode) {
+      const newUrl = url.split("?code=");
+      window.history.pushState({}, "", newUrl[0]);
+      props.startLogin();
+
+      // axios.post(props.data.proxy_url, newUrl[1]).then(response => )
+    }
+  });
 
   return (
     <div
@@ -54,11 +67,13 @@ const Login = (props) => {
 };
 
 const mapDispatchToprops = (dispatch) => {
-  return {};
+  return {
+    startLoading: () => dispatch(actions.startLoading()),
+  };
 };
 
 const mapStateToprops = (state) => {
   return { data: state };
 };
 
-export default connect(mapStateToprops, null)(Login);
+export default connect(mapStateToprops, mapDispatchToprops)(Login);
