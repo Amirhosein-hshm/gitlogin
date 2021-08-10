@@ -34,8 +34,10 @@ app.post("/authenticate", (req, res) => {
 
   // Request to exchange code for an access token
 
-  axios
-    .post(`https://github.com/login/oauth/access_token`, data)
+  fetch(`https://github.com/login/oauth/access_token`, {
+    method: "POST",
+    body: data,
+  })
     .then((response) => response.text())
     .then((paramsString) => {
       let params = new URLSearchParams(paramsString);
