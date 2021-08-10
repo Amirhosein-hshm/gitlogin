@@ -5,7 +5,6 @@ import Login from "./Login/Login";
 import Home from "../components/Home/Home";
 
 function App() {
-  console.log(process.env.REACT_APP_CLIENT_SECRET);
   return (
     <div className={classes.App}>
       <Router>

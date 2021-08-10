@@ -51,24 +51,24 @@ const Login = (props) => {
         <div className={classes.error_container}>{props.data.errorMessage}</div>
       ) : null}
 
-      <form className={classes.Login__form}>
+      {/* <form className={classes.Login__form}>
         <Input type="input" placeholder="please inter your username" />
         <Input type="input" placeholder="please inter your password" />
 
         <Button>join</Button>
-        <a
-          className={classes.Login__gitub}
-          href={`https://github.com/login/oauth/authorize?scope=user&client_id=${props.data.client_id}&redirect_uri=${props.data.redirect_url}`}
-          onClick={() => {
-            props.loginBtn();
-          }}
-        >
-          <div className={classes.Login__link_text}>
-            <GithubIcon />
-            <p>signin with github</p>
-          </div>
-        </a>
-      </form>
+      </form> */}
+      <a
+        className={classes.Login__gitub}
+        href={`https://github.com/login/oauth/authorize?scope=user&client_id=${props.data.client_id}&redirect_uri=${props.data.redirect_url}`}
+        onClick={() => {
+          props.loginBtn();
+        }}
+      >
+        <div className={classes.Login__link_text}>
+          <GithubIcon />
+          <p>signin with github</p>
+        </div>
+      </a>
     </div>
   );
 };
