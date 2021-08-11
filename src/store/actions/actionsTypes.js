@@ -24,15 +24,13 @@ const LoginFail = () => {
 
 export const startLogin = (proxy_url, hash) => {
   console.log(hash);
-  return (dispatch) => {
-    axios
-      .post(proxy_url, hash)
-      .then((dataResponse) => {
-        dispatch(LoginSuccess(dataResponse));
-      })
-      .catch((error) => {
-        dispatch(LoginFail());
-      });
+  return async function (dispatch) {
+    try {
+      const response = await axios.post(proxy_url, hash);
+      dispatch(LoginSuccess(response));
+    } catch (error) {
+      dispatch(LoginFail());
+    }
   };
 };
 
