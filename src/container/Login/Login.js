@@ -35,6 +35,7 @@ const Login = (props) => {
 
     if (hashCode) {
       const newUrl = url.split("?code=");
+      console.log(newUrl);
       window.history.pushState({}, "", newUrl[0]);
       props.startLoading();
       props.login(props.data.proxy_url, newUrl[1]);

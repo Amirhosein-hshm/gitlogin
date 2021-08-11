@@ -23,15 +23,14 @@ const LoginFail = () => {
 };
 
 export const startLogin = (proxy_url, hash) => {
+  console.log(hash);
   return (dispatch) => {
     axios
       .post(proxy_url, hash)
       .then((dataResponse) => {
-        console.log(dataResponse);
         dispatch(LoginSuccess(dataResponse));
       })
       .catch((error) => {
-        console.log(error);
         dispatch(LoginFail());
       });
   };

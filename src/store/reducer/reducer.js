@@ -14,8 +14,11 @@ export const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionsTypes.LOGED_IN:
-      localStorage.setItem("isLoggedIn", action.payload.isLoggedIn);
-      localStorage.setItem("user", action.payload.user);
+      localStorage.setItem(
+        "isLoggedIn",
+        JSON.stringify(action.payload.isLoggedIn)
+      );
+      localStorage.setItem("user", JSON.stringify(action.payload.user));
       return {
         ...state,
         isLoggedIn: action.payload.isLoggedIn,

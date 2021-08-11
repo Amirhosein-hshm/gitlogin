@@ -19,13 +19,15 @@ app.use((req, res, next) => {
 });
 
 app.post("/authenticate", (req, res) => {
-  const { code } = req.body;
+  const code = req.body;
+  const core = Object.keys(code)[0];
+  // console.log("BODY", req.body);
 
   const data = {
     client_id: client_id,
     client_secret: client_secret,
     redirect_url: redirect_url,
-    code: code,
+    code: core,
   };
 
   // client_id
@@ -34,23 +36,35 @@ app.post("/authenticate", (req, res) => {
 
   // Request to exchange code for an access token
 
-  fetch(`https://github.com/login/oauth/access_token`, {
-    method: "POST",
-    body: data,
-  })
-    .then((response) => response.text())
-    .then((paramsString) => {
-      let params = new URLSearchParams(paramsString);
-      const access_token = params.get("access_token");
-      console.log("hi");
+  // console.log(JSON.stringify(data));
+  // console.log(data);
 
-      // Request to return data of a user that has been authenticated
+  axios
+    .post(`https://github.com/login/oauth/access_token`, data)
+    .then((response) => {
+      // console.log(response.data.split("access_token=")[1]);
+      // return response.text();
+      const access_token = response.data
+        .split("access_token=")[1]
+        .split("&scope")[0];
       return fetch(`https://api.github.com/user`, {
         headers: {
           Authorization: `token ${access_token}`,
         },
       });
     })
+    // .then((paramsString) => {
+    //   let params = new URLSearchParams(paramsString);
+    //   const access_token = params.get("access_token");
+    //   console.log(access_token);
+
+    //   // Request to return data of a user that has been authenticated
+    //   return fetch(`https://api.github.com/user`, {
+    //     headers: {
+    //       Authorization: `token ${access_token}`,
+    //     },
+    //   });
+    // })
     .then((response) => response.json())
     .then((response) => {
       return res.status(200).json(response);

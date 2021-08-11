@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import classes from "./Home.module.css";
 
-const home = (props) => {
-  if (props.data.user) {
-    console.log(props.data.user, props.data.user.public_repos);
+const Home = (props) => {
+  if (!props.data.isLoggedIn) {
+    return <Redirect to="/login" />;
   }
+  // {}
 
-  return <div className="Home"></div>;
+  console.log(props.data.user);
+  const {
+    name,
+    followers,
+    following,
+    updated_at: lastUpdate,
+  } = props.data.user.data;
+
+  return <div className={classes.Home}></div>;
 };
 
 const mapstateToProps = (state) => {
@@ -15,4 +26,4 @@ const mapstateToProps = (state) => {
   };
 };
 
-export default connect(mapstateToProps, null)(home);
+export default connect(mapstateToProps, null)(Home);
