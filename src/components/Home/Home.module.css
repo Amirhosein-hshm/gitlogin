@@ -1,9 +1,55 @@
 .Home {
   height: 100vh;
-  background-image: linear-gradient(
-    to bottom right,
-    rgb(200, 51, 101),
-    rgb(0, 0, 0)
-  );
+  position: relative;
+}
+
+.User__card {
+  background-color: #eee;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 80rem;
   display: flex;
+  box-shadow: 0 1rem 1.5rem rgb(110, 110, 110);
+}
+
+.User__profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  border-right: 1px solid rgb(187, 187, 187);
+}
+
+.User__profile_picture {
+  width: 15rem;
+  height: 15rem;
+  border-radius: 50%;
+  border: 1px solid rgb(95, 95, 95);
+}
+
+.User__profile_name {
+  font-size: 2.4rem;
+  color: rgb(24, 24, 24);
+}
+
+.User__bio {
+  font-size: 1.6rem;
+  color: rgb(27, 27, 27);
+  border-bottom: 1px solid rgb(139, 139, 139);
+  padding-bottom: 3px;
+}
+
+.User__about {
+  font-size: 2;
+  display: flex;
+  justify-content: center;
+  flex: 1 0 0;
+}
+
+.User__about_paragraph {
+  margin-right: 2rem;
+  color: rgb(27, 27, 27);
+  font-size: 2rem;
 }
