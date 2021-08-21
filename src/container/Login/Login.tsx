@@ -2,12 +2,28 @@ import React, { useEffect, useState } from "react";
 import GithubIcon from "mdi-react/GithubIcon";
 import { Redirect } from "react-router-dom";
 import classes from "./Login.module.css";
-import Input from "../../components/Input/Input";
-import Button from "../../components/Button/Button";
-import { connect } from "react-redux";
+import { connect, ReactReduxContextValue } from "react-redux";
 import * as actions from "../../store/actions/actionsTypes";
+import { InitialState } from "../../store/reducer/reducer";
+import { ThunkDispatch } from "redux-thunk";
+import { Action } from "redux";
+import * as myTypes from "../../store/types";
 
-const Login = (props) => {
+type Loginprops = {
+  data: myTypes.InitialState;
+  startLogin: Function;
+  login: (a: string, b: string) => Function;
+  loginBtn: Function;
+  startLoading: Function;
+};
+
+const Login: React.FC<Loginprops> = ({
+  data,
+  startLogin,
+  login,
+  loginBtn,
+  startLoading,
+}) => {
   const [dataForm, setData] = useState({
     username: {
       elementType: "input",
@@ -37,19 +53,19 @@ const Login = (props) => {
       const newUrl = url.split("?code=");
       console.log(newUrl);
       window.history.pushState({}, "", newUrl[0]);
-      props.startLoading();
-      props.login(props.data.proxy_url, newUrl[1]);
+      startLoading();
+      if (typeof data.proxy_url === "string") login(data.proxy_url, newUrl[1]);
     }
-  }, [props.data, props.startLogin, props.login]);
+  }, [data, startLogin, login]);
 
-  if (props.data.isLoggedIn) {
+  if (data.isLoggedIn) {
     return <Redirect to="/" />;
   }
   return (
     <div className={classes.Login}>
       <h1 className={classes.Login__title}>signup</h1>
-      {props.data.errorMessage ? (
-        <div className={classes.error_container}>{props.data.errorMessage}</div>
+      {data.errorMessage ? (
+        <div className={classes.error_container}>{data.errorMessage}</div>
       ) : null}
 
       {/* <form className={classes.Login__form}>
@@ -60,9 +76,9 @@ const Login = (props) => {
       </form> */}
       <a
         className={classes.Login__gitub}
-        href={`https://github.com/login/oauth/authorize?scope=user&client_id=${props.data.client_id}&redirect_uri=${props.data.redirect_url}`}
+        href={`https://github.com/login/oauth/authorize?scope=user&client_id=${data.client_id}&redirect_uri=${data.redirect_url}`}
         onClick={() => {
-          props.loginBtn();
+          loginBtn();
         }}
       >
         <div className={classes.Login__link_text}>
@@ -74,15 +90,16 @@ const Login = (props) => {
   );
 };
 
-const mapDispatchToprops = (dispatch) => {
+const mapDispatchToprops = (dispatch: Function) => {
   return {
     startLoading: () => dispatch(actions.startLoading()),
-    login: (proxy_url, hash) => dispatch(actions.startLogin(proxy_url, hash)),
+    login: (proxy_url: string, hash: string) =>
+      dispatch(actions.startLogin(proxy_url, hash)),
     loginBtn: () => dispatch(actions.loginBtn()),
   };
 };
 
-const mapStateToprops = (state) => {
+const mapStateToprops = (state: InitialState) => {
   return { data: state };
 };
 

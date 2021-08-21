@@ -1,17 +1,11 @@
+import { Url } from "url";
 import * as actionsTypes from "../actions/actionsLogin";
+import * as myTypes from "../types";
 
-export const initialState = {
-  isLoggedIn: JSON.parse(localStorage.getItem("isLoggedIn")) || false,
-  user: JSON.parse(localStorage.getItem("user")) || null,
-  client_id: process.env.REACT_APP_CLIENT_ID,
-  redirect_url: process.env.REACT_APP_REDIRECT_URL,
-  client_secret: process.env.REACT_APP_CLIENT_SECRET,
-  proxy_url: process.env.REACT_APP_PROXY_URL,
-  isLoading: false,
-  errorMessage: "",
-};
-
-const reducer = (state = initialState, action) => {
+const reducer = (
+  state: myTypes.InitialState = initialState,
+  action: myTypes.actionsTyps
+) => {
   switch (action.type) {
     case actionsTypes.LOGED_IN:
       localStorage.setItem(
@@ -56,6 +50,27 @@ const reducer = (state = initialState, action) => {
     default:
       return state;
   }
+};
+
+export interface InitialState {
+  isLoggedIn: boolean;
+  user: string;
+  client_id: string | undefined;
+  redirect_url: string | undefined;
+  client_secret: string | undefined;
+  proxy_url: string | undefined;
+  isLoading: boolean;
+  errorMessage: string;
+}
+export const initialState: InitialState = {
+  isLoggedIn: JSON.parse(localStorage.getItem("isLoggedIn") as string) || false,
+  user: JSON.parse(localStorage.getItem("user") as string) || null,
+  client_id: process.env.REACT_APP_CLIENT_ID,
+  redirect_url: process.env.REACT_APP_REDIRECT_URL,
+  client_secret: process.env.REACT_APP_CLIENT_SECRET,
+  proxy_url: process.env.REACT_APP_PROXY_URL,
+  isLoading: false,
+  errorMessage: "",
 };
 
 export default reducer;

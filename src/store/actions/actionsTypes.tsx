@@ -1,6 +1,8 @@
 import * as actionType from "./actionsLogin";
-
+import { ThunkAction } from "redux-thunk";
 import axios from "axios";
+import { AnyAction } from "redux";
+import * as myType from "../types";
 
 export const startLoading = () => {
   return {
@@ -8,7 +10,7 @@ export const startLoading = () => {
   };
 };
 
-const LoginSuccess = (data) => {
+const LoginSuccess = (data: Object) => {
   return {
     type: actionType.LOGED_IN,
     payload: { user: data, isLoggedIn: true },
@@ -22,17 +24,15 @@ const LoginFail = () => {
   };
 };
 
-export const startLogin = (proxy_url, hash) => {
-  console.log(hash);
-  return async function (dispatch) {
+export const startLogin = (proxy_url: string, hash: string) =>
+  async function (dispatch: myType.Dispatch) {
     try {
       const response = await axios.post(proxy_url, hash);
-      dispatch(LoginSuccess(response));
+      dispatch(LoginSuccess(response) as myType.actionsTyps);
     } catch (error) {
-      dispatch(LoginFail());
+      dispatch(LoginFail() as myType.actionsTyps);
     }
   };
-};
 
 export const loginBtn = () => {
   return {

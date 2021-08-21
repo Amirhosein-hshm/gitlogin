@@ -5,9 +5,13 @@ import App from "./container/App";
 import reducer from "./store/reducer/reducer";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, Store } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
+import * as myTypes from "./store/types";
 
-const store = createStore(reducer, applyMiddleware(thunk));
+const store: Store<myTypes.InitialState, myTypes.actionsTyps> & {
+  dispatch: myTypes.Dispatch;
+} = createStore(reducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <React.StrictMode>
