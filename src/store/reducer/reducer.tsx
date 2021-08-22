@@ -52,23 +52,13 @@ const reducer = (
   }
 };
 
-export interface InitialState {
-  isLoggedIn: boolean;
-  user: string;
-  client_id: string | undefined;
-  redirect_url: string | undefined;
-  client_secret: string | undefined;
-  proxy_url: string | undefined;
-  isLoading: boolean;
-  errorMessage: string;
-}
-export const initialState: InitialState = {
+export const initialState: myTypes.InitialState = {
   isLoggedIn: JSON.parse(localStorage.getItem("isLoggedIn") as string) || false,
   user: JSON.parse(localStorage.getItem("user") as string) || null,
-  client_id: process.env.REACT_APP_CLIENT_ID,
-  redirect_url: process.env.REACT_APP_REDIRECT_URL,
-  client_secret: process.env.REACT_APP_CLIENT_SECRET,
-  proxy_url: process.env.REACT_APP_PROXY_URL,
+  client_id: process.env.REACT_APP_CLIENT_ID as string,
+  redirect_url: process.env.REACT_APP_REDIRECT_URL as string,
+  client_secret: process.env.REACT_APP_CLIENT_SECRET as string,
+  proxy_url: process.env.REACT_APP_PROXY_URL as string,
   isLoading: false,
   errorMessage: "",
 };

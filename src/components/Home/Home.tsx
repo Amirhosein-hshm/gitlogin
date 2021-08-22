@@ -1,15 +1,23 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import classes from "./Home.module.css";
+import { InitialState } from "../../store/types";
+import {
+  Container,
+  Usercard,
+  UserProfile,
+  Userphoto,
+  Username,
+  Userbio,
+  UserInfo,
+  UserInfoText,
+} from "./stylecomponents.style";
 
-const Home = (props) => {
-  if (!props.data.isLoggedIn) {
-    return <Redirect to="/login" />;
-  }
-  // {}
+interface IProps {
+  data: InitialState;
+}
 
-  console.log(props.data.user);
+const Home: React.FC<IProps> = ({ data }) => {
   const {
     name,
     followers,
@@ -17,30 +25,26 @@ const Home = (props) => {
     updated_at: lastUpdate,
     avatar_url: image,
     bio,
-  } = props.data.user.data;
+  } = data.user?.data;
 
   return (
-    <div className={classes.Home}>
-      <div className={classes.User__card}>
-        <div className={classes.User__profile}>
-          <img src={image} className={classes.User__profile_picture} />
-          <p className={classes.User__profile_name}>{name}</p>
-          <p className={classes.User__bio}>{bio}</p>
-        </div>
-        <div className={classes.User__about}>
-          <p className={classes.User__about_paragraph}>
-            Followers: {followers}
-          </p>
-          <p className={classes.User__about_paragraph}>
-            Following: {following}
-          </p>
-        </div>
-      </div>
-    </div>
+    <Container>
+      <Usercard>
+        <UserProfile>
+          <Userphoto src={image} />
+          <Username>{name}</Username>
+          <Userbio>{bio}</Userbio>
+        </UserProfile>
+        <UserInfo>
+          <UserInfoText>Followers: {followers}</UserInfoText>
+          <UserInfoText>Following: {following}</UserInfoText>
+        </UserInfo>
+      </Usercard>
+    </Container>
   );
 };
 
-const mapstateToProps = (state) => {
+const mapstateToProps = (state: InitialState) => {
   return {
     data: state,
   };

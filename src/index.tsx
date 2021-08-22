@@ -1,13 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./container/App";
+import App from "./App";
 import reducer from "./store/reducer/reducer";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, Store } from "redux";
-import { configureStore } from "@reduxjs/toolkit";
+
 import * as myTypes from "./store/types";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import Login from "./container/Login/Login";
 
 const store: Store<myTypes.InitialState, myTypes.actionsTyps> & {
   dispatch: myTypes.Dispatch;
@@ -16,7 +17,12 @@ const store: Store<myTypes.InitialState, myTypes.actionsTyps> & {
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <Switch>
+          <Route path="/login" component={Login} />
+          <App />
+        </Switch>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

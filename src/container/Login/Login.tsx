@@ -1,49 +1,26 @@
 import React, { useEffect, useState } from "react";
 import GithubIcon from "mdi-react/GithubIcon";
 import { Redirect } from "react-router-dom";
-import classes from "./Login.module.css";
-import { connect, ReactReduxContextValue } from "react-redux";
+
+import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import * as actions from "../../store/actions/actionsTypes";
-import { InitialState } from "../../store/reducer/reducer";
-import { ThunkDispatch } from "redux-thunk";
-import { Action } from "redux";
+import { InitialState } from "../../store/types";
 import * as myTypes from "../../store/types";
+import {
+  Wraper,
+  Title,
+  ErrorPop,
+  Gitlink,
+  LoginLink,
+} from "../../components/Home/stylecomponents.style";
 
-type Loginprops = {
-  data: myTypes.InitialState;
-  startLogin: Function;
-  login: (a: string, b: string) => Function;
-  loginBtn: Function;
-  startLoading: Function;
-};
+interface LoginProps {}
 
-const Login: React.FC<Loginprops> = ({
-  data,
-  startLogin,
-  login,
-  loginBtn,
-  startLoading,
-}) => {
-  const [dataForm, setData] = useState({
-    username: {
-      elementType: "input",
-      elementConfig: { type: "text", placeholder: "Your username" },
-      value: "",
-      validation: {
-        required: true,
-        minLength: 1,
-      },
-    },
-    password: {
-      elementType: "input",
-      elementConfig: { type: "text", placeholder: "Your password" },
-      value: "",
-      validation: {
-        required: true,
-        minLength: 2,
-      },
-    },
-  });
+const Login: React.FC = ({}) => {
+  const { proxy_url, errorMessage, isLoggedIn, client_id, redirect_url } =
+    useSelector((state: InitialState) => state);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const url = window.location.href;
@@ -53,54 +30,34 @@ const Login: React.FC<Loginprops> = ({
       const newUrl = url.split("?code=");
       console.log(newUrl);
       window.history.pushState({}, "", newUrl[0]);
-      startLoading();
-      if (typeof data.proxy_url === "string") login(data.proxy_url, newUrl[1]);
+      dispatch(actions.startLoading);
+      dispatch(actions.startLogin(proxy_url, newUrl[1]));
     }
-  }, [data, startLogin, login]);
+  }, [proxy_url, actions.startLoading, actions.startLogin]);
 
-  if (data.isLoggedIn) {
+  // console.log(Wraper);
+
+  if (isLoggedIn) {
     return <Redirect to="/" />;
   }
   return (
-    <div className={classes.Login}>
-      <h1 className={classes.Login__title}>signup</h1>
-      {data.errorMessage ? (
-        <div className={classes.error_container}>{data.errorMessage}</div>
-      ) : null}
+    <Wraper>
+      <Title>signup</Title>
+      {errorMessage ? <ErrorPop>{errorMessage}</ErrorPop> : null}
 
-      {/* <form className={classes.Login__form}>
-        <Input type="input" placeholder="please inter your username" />
-        <Input type="input" placeholder="please inter your password" />
-
-        <Button>join</Button>
-      </form> */}
-      <a
-        className={classes.Login__gitub}
-        href={`https://github.com/login/oauth/authorize?scope=user&client_id=${data.client_id}&redirect_uri=${data.redirect_url}`}
+      <Gitlink
+        href={`https://github.com/login/oauth/authorize?scope=user&client_id=${client_id}&redirect_uri=${redirect_url}`}
         onClick={() => {
-          loginBtn();
+          dispatch(actions.loginBtn());
         }}
       >
-        <div className={classes.Login__link_text}>
+        <LoginLink>
           <GithubIcon />
           <p>signin with github</p>
-        </div>
-      </a>
-    </div>
+        </LoginLink>
+      </Gitlink>
+    </Wraper>
   );
 };
 
-const mapDispatchToprops = (dispatch: Function) => {
-  return {
-    startLoading: () => dispatch(actions.startLoading()),
-    login: (proxy_url: string, hash: string) =>
-      dispatch(actions.startLogin(proxy_url, hash)),
-    loginBtn: () => dispatch(actions.loginBtn()),
-  };
-};
-
-const mapStateToprops = (state: InitialState) => {
-  return { data: state };
-};
-
-export default connect(mapStateToprops, mapDispatchToprops)(Login);
+export default Login;

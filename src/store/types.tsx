@@ -1,18 +1,29 @@
+export interface User {
+  data: {
+    name: string;
+    followers: string;
+    following: string;
+    updated_at: string;
+    avatar_url: string;
+    bio: string;
+  };
+}
+
 export interface InitialState {
   isLoggedIn: boolean;
-  client_id: string | undefined;
-  redirect_url: string | undefined;
-  client_secret: string | undefined;
-  proxy_url: string | undefined;
+  client_id: string;
+  redirect_url: string;
+  client_secret: string;
+  proxy_url: string;
   isLoading: boolean;
   errorMessage: string;
-  user: string | Object | null;
+  user: User;
 }
 
 export interface actionsTyps {
   type: string;
   payload: {
-    user: Object;
+    user: User;
     isLoggedIn: boolean;
     errorMessage: string;
     isLoading: boolean;
